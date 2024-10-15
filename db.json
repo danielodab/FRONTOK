@@ -1,0 +1,77 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "nome": "user1",
+      "sexo": "feminino",
+      "cpf": "123.456.789-00",
+      "aniversario": "1990-01-01",
+      "email": "user2@examplo.com",
+      "password": "password1"
+    },
+    {
+      "id": "2",
+      "nome": "user2",
+      "sexo": "Masculino",
+      "cpf": "987.654.321-00",
+      "aniversario": "1992-05-15",
+      "email": "user2@examplo.com",
+      "password": "password2"
+    },
+    {
+      "id": "3",
+      "nome": "user3",
+      "sexo": "Masculino",
+      "cpf": "312.894.985-66",
+      "aniversario": "1996-03-11",
+      "email": "user3@exemplo.com",
+      "password": "12345"
+    },
+    {
+      "id": "4",
+      "nome": "user4",
+      "sexo": "feminino",
+      "cpf": "948.369.314-55",
+      "aniversario": "1996-03-11",
+      "email": "user4@exemplo.com",
+      "password": "12345"
+    },
+    {
+      "id": "5",
+      "nome": "user5",
+      "sexo": "Masculino",
+      "cpf": "134.465.464.89",
+      "aniversario": "1996-03-11",
+      "email": "user5@exemplo.com",
+      "password": "12345"
+    }
+  ],
+  "destinos": [
+    {
+      "id": "5454",
+      "nome": "teste",
+      "cep": "88064001",
+      "latitude": -27.7038058,
+      "longitude": -48.5301928,
+      "street": "Rodovia Baldicero Filomeno",
+      "city": "Florianópolis",
+      "state": "SC",
+      "country": "Brasil",
+      "userId": "2",
+      "userName": "user2"
+    },
+    {
+      "id": "18de",
+      "nome": "teste2",
+      "cep": "88063-700",
+      "latitude": "-27.650399",
+      "longitude": "-48.518582",
+      "street": "Rodovia Sc 405",
+      "city": "Florianópolis",
+      "state": "Santa Catarina",
+      "country": "Brazil",
+      "userId": "2",
+      "userName": "user2"
+    }
+  ]
+}

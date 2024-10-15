@@ -1,0 +1,148 @@
+.img-dashboard {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column; /* Organiza o conteúdo na vertical */
+    justify-content: flex-start; /* Mantém o conteúdo no topo */
+    align-items: center;
+}
+
+/* Estilo do conteúdo principal */
+.main-content {
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo semitransparente para melhor legibilidade */
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 900px; /* Largura máxima do conteúdo */
+    width: 90%; /* Largura responsiva */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* Organiza os itens em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+}
+
+/* Títulos */
+.title {
+    color: #457b9d; /* Cor azul clara */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5rem; /* Tamanho do título */
+}
+
+.sub-title {
+    color: #1d3557; /* Cor azul escuro */
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.8rem; /* Tamanho do subtítulo */
+}
+
+/* Estilo dos cartões */
+.cards-container {
+    display: flex;
+    justify-content: space-around; /* Espaçamento entre os cartões */
+    width: 100%;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Permite que os cartões se reorganizem em telas menores */
+}
+
+.card {
+    background-color: #ffffff; /* Fundo branco para os cartões */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    flex: 1; /* Flex-grow para preencher o espaço disponível */
+    margin: 10px; /* Margem entre os cartões */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves ao passar o mouse */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Aumenta o tamanho do cartão ao passar o mouse */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); /* Aumenta o sombreado ao passar o mouse */
+}
+
+.card h3 {
+    color: #457b9d; /* Cor do título do cartão */
+    margin-bottom: 10px;
+}
+
+/* Estilo do mapa */
+.containerMap {
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Estilo do cabeçalho do mapa */
+.headerContainer {
+    text-align: center; /* Centraliza o título do mapa */
+    margin-bottom: 1rem; /* Espaço abaixo do cabeçalho */
+}
+
+/* Estilos para mensagens de erro e sucesso */
+.error-message {
+    color: #e63946; /* Vermelho para mensagens de erro */
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold; /* Destaca a mensagem */
+}
+
+.success-message {
+    color: #4CAF50; /* Verde para mensagens de sucesso */
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold; /* Destaca a mensagem */
+}
+
+/* Estilo do botão de login */
+.login-button-container {
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+    width: 100%; /* Largura total do contêiner */
+    padding: 10px; /* Espaço ao redor do botão */
+}
+
+.login-button {
+    padding: 8px 16px; /* Tamanho do botão */
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Remove bordas */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor em forma de mão */
+    transition: background-color 0.3s, transform 0.2s; /* Transições suaves para cor de fundo e transformação */
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.05); /* Aumenta o botão ao passar o mouse */
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .main-content {
+        width: 95%; /* Ajuste a largura em telas menores */
+        padding: 15px; /* Reduz o padding */
+    }
+
+    .title {
+        font-size: 1.8rem; /* Reduz o tamanho do título */
+    }
+
+    .sub-title {
+        font-size: 1.5rem; /* Reduz o tamanho do subtítulo */
+    }
+
+    .cards-container {
+        flex-direction: column; /* Organiza os cartões em coluna em telas menores */
+        align-items: center; /* Centraliza os cartões */
+    }
+
+    .card {
+        margin: 10px 0; /* Margem entre os cartões */
+        width: 100%; /* Largura total dos cartões */
+    }
+}
