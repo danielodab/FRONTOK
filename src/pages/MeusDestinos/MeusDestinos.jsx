@@ -56,7 +56,8 @@ export default function MeusDestinos() {
     };
     
     return (
-        <div>
+        <div className="img-background">
+        <div> 
             <Header />
             <main className="main-destinations">
                 <h1 className="destinations-title">Meus Destinos</h1>
@@ -73,6 +74,7 @@ export default function MeusDestinos() {
                 </ul>
             </main>
             <Footer />
+            </div>
         </div>
     );
 }

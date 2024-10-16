@@ -1,11 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+.img-background {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: url('../../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.img-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+
 .main-destinations {
-    padding: 20px;
-    background-color: #f9f9f9;
-    min-height: calc(100vh - 200px);
-    border-radius: 8px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 900px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
   
   .destinations-title {
     color: #457b9d;
@@ -23,7 +58,9 @@
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
+    width:600px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
   }
 
   .destination-name {

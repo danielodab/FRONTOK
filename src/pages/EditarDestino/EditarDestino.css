@@ -1,10 +1,43 @@
-main {
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+  }
+
+.img-dashboard {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: url('../../assets/background.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    position: relative; 
+  }
+  
+  .img-dashboard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5); 
+  }
+.div {
+    z-index: 2;
+}
+  main {
     padding: 20px;
     background-color: #f9f9f9;
     min-height: calc(100vh - 200px);
-    max-width: 600px;
+    width: 900px;
     margin: 0 auto;
     border-radius: 8px;
+    z-index: 3;
 }
 
 h1 {

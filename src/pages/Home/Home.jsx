@@ -1,120 +1,20 @@
-// import React, { useEffect, useState } from 'react';
-// import Header from '../../components/Header/Header';
-// import Footer from '../../components/Footer/Footer';
-// import './Home.css';
-
-// const Home = () => {
-//     const [usuariosAtivos, setUsuariosAtivos] = useState(0);
-//     const [totalLocais, setTotalLocais] = useState(0);
-//     const [locais, setLocais] = useState([]);
-//     const [error, setError] = useState('');
-
-//     useEffect(() => {
-//         const fetchUsuariosAtivos = async () => {
-//             try {
-//                 const response = await fetch('http://localhost:3000/usuarios/true');
-//                 if (!response.ok) {
-//                     throw new Error('Erro ao carregar usuários ativos');
-//                 }
-//                 const data = await response.json();
-//                 setUsuariosAtivos(data.total);
-//             } catch (error) {
-//                 console.error('Erro:', error);
-//                 setError(error.message);
-//             }
-//         };
-
-//         const fetchTotalLocais = async () => {
-//             try {
-//                 const response = await fetch('http://localhost:3000/local/localTotal');
-//                 if (!response.ok) {
-//                     throw new Error('');
-//                 }
-//                 const data = await response.json();
-//                 setTotalLocais(data.Total);
-//             } catch (error) {
-//                 console.error('Erro:', error);
-//                 setError(error.message);
-//             }
-//         };
-
-//         const fetchLocais = async () => {
-//             try {
-//                 const response = await fetch('http://localhost:3000/local/local');
-//                 if (!response.ok) {
-//                     throw new Error('');
-//                 }
-//                 const data = await response.json();
-//                 setLocais(data);
-//             } catch (error) {
-//                 console.error('Erro:', error);
-//                 setError(error.message);
-//             }
-//         };
-
-//         fetchUsuariosAtivos();
-//         fetchTotalLocais();
-//         fetchLocais();
-//     }, []);
-
-//     return (
-//         <div>
-//             <Header />
-//             <main className="main-content">
-//                 <h1 className="title">Estatísticas do Sistema</h1>
-
-//                 {error && <p className="error-message">{error}</p>}
-
-//                 <div className="cards-container">
-//                     <div className="card">
-//                         <h3>Usuários Ativos</h3>
-//                         <p>{usuariosAtivos}</p>
-//                     </div>
-//                     <div className="card">
-//                         <h3>Locais Cadastrados</h3>
-//                         <p>{totalLocais}</p>
-//                     </div>
-//                 </div>
-
-//                 <h2 className="sub-title">Lista de Locais</h2>
-//                 <div className="locais-lista">
-//                     {locais.length > 0 ? (
-//                         <ul className="destinos-list">
-//                             {locais.map((local) => (
-//                                 <li key={local.id_local} className="destinos-item">
-//                                     <h3>{local.nome_local}</h3>
-//                                     <p>{local.descricao_local}</p>
-//                                     <p>{local.logradouro_local}, {local.cidade_local} - {local.estado_local}</p>
-//                                     <p>CEP: {local.cep_local}</p>
-//                                     <p>Lat: {local.latitude_local}, Lon: {local.longitude_local}</p>
-//                                 </li>
-//                             ))}
-//                         </ul>
-//                     ) : (
-//                         <p>Nenhum local cadastrado.</p>
-//                     )}
-//                 </div>
-//             </main>
-//             <Footer />
-//         </div>
-//     );
-// };
-
-// export default Home;
-
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import { MarcadoresMapa } from '../../components/MarcadorMapa/marcadores-mapa';
+import backgroundImage from '../../assets/viagem.jpg';
 
 const Home = () => {
+    const navigate = useNavigate();
     const [usuariosAtivos, setUsuariosAtivos] = useState(0);
     const [totalLocais, setTotalLocais] = useState(0);
-    const [locais, setLocais] = useState([]); // Estado para armazenar todos os locais
+    const [locais, setLocais] = useState([]);
     const [error, setError] = useState('');
+    const [localSelecionado, setLocalSelecionado] = useState(null); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -135,7 +35,19 @@ const Home = () => {
 
                 setUsuariosAtivos(usuariosData.total);
                 setTotalLocais(locaisTotalData.Total);
-                setLocais(locaisData);
+
+                const locaisTransformados = locaisData.map((local) => ({
+                    id: local.id_local,
+                    nome: local.nome_local,
+                    descricao: local.descricao_local,
+                    imagem: local.imagem_local || null,
+                    localizacao: local.latitude_local && local.longitude_local ? {
+                        latitude: local.latitude_local,
+                        longitude: local.longitude_local
+                    } : null
+                }));
+
+                setLocais(locaisTransformados);
             } catch (error) {
                 console.error('Erro:', error);
                 setError(error.message);
@@ -145,8 +57,14 @@ const Home = () => {
         fetchData();
     }, []);
 
+    const handleLocalClick = (local) => {
+        if (local.localizacao) { 
+            setLocalSelecionado(local);
+        }
+    };
+
     return (
-        <div>
+        <div className="img-dashboard">
             <Header />
             <main className="main-content">
                 <h1 className="title">Estatísticas do Sistema</h1>
@@ -155,12 +73,27 @@ const Home = () => {
                 <div className="cards-container">
                     <div className="card">
                         <h3>Usuários Ativos</h3>
-                        <p>{usuariosAtivos}</p>
-                    </div>
+                    <p>{usuariosAtivos}</p>
+                </div>
                     <div className="card">
                         <h3>Locais Cadastrados</h3>
-                        <p>{totalLocais}</p>
+                    <p>{totalLocais}</p>
                     </div>
+                </div>
+
+                <div className="containerMap">
+                    <div className="headerContainer">
+                        <h4 className="TitttleMap">Mapa</h4>
+                        <p className="DsTitttleMap">Localidades marcadas no mapa</p>
+                    </div>
+                    <MapContainer
+                        center={[-27.747782, -48.507073]}
+                        zoom={13}
+                        style={{ height: '400px', width: '100%' }}
+                    >
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        {locais.length > 0 && <MarcadoresMapa locais={locais} localSelecionado={localSelecionado} />}
+                    </MapContainer>
                 </div>
 
                 <h2 className="sub-title">Lista de Locais</h2>
@@ -168,12 +101,15 @@ const Home = () => {
                     {locais.length > 0 ? (
                         <ul className="destinos-list">
                             {locais.map((local) => (
-                                <li key={local.id_local} className="destinos-item">
-                                    <h3>{local.nome_local}</h3>
-                                    <p>{local.descricao_local}</p>
-                                    <p>{local.logradouro_local}, {local.cidade_local} - {local.estado_local}</p>
-                                    <p>CEP: {local.cep_local}</p>
-                                    <p>Lat: {local.latitude_local}, Lon: {local.longitude_local}</p>
+                                <li
+                                    key={local.id}
+                                    className="destinos-item"
+                                    onClick={() => handleLocalClick(local)}
+                                    style={{ cursor: 'pointer', width: 'calc(50% - 10px)', margin: '5px' }} 
+                                >
+                                    <h3>{local.nome}</h3>
+                                    <p>{local.descricao}</p>
+                                    <p>Lat: {local.localizacao.latitude}, Lon: {local.localizacao.longitude}</p>
                                 </li>
                             ))}
                         </ul>
@@ -181,26 +117,11 @@ const Home = () => {
                         <p>Nenhum local cadastrado.</p>
                     )}
                 </div>
-
-                <div className="containerMap">
-                    <div className="headerContainer">
-                        <h4>Mapa</h4>
-                        <p>Localidades marcadas no mapa</p>
-                    </div>
-                    <MapContainer
-                        center={[-27.747782, -48.507073]}
-                        zoom={13}
-                        style={{ height: '280px', width: '100%' }} // Responsividade
-                    >
-                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                        <MarcadoresMapa locais={locais} />
-                    </MapContainer>
-                </div>
             </main>
-            <Footer />
+                <Footer/>
         </div>
+
     );
 };
 
 export default Home;
-
