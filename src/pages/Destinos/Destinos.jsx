@@ -159,11 +159,11 @@ export default function Destinos() {
   };
 
   return (
-    <div>
-      <Header />
+      <div className="img-background">
+      <div>
+      <Header/>
       <main className="main-content-form">
         <h1 className="form-title">{editar ? 'Editar Destino' : 'Cadastrar Destino'}</h1>
-
         <form onSubmit={handleSubmit} className="form-content">
           <input
             type="text"
@@ -248,8 +248,8 @@ export default function Destinos() {
           </button>
         </form>
       </main>
-
       <Footer />
+      </div>
     </div>
   );
 }

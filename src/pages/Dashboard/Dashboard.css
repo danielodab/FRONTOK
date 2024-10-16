@@ -1,148 +1,196 @@
+body {
+    margin: 500;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 .img-dashboard {
     margin: 0;
     font-family: Arial, sans-serif;
     height: 100vh;
     width: 100vw;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
     display: flex;
-    flex-direction: column; /* Organiza o conteúdo na vertical */
-    justify-content: flex-start; /* Mantém o conteúdo no topo */
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    background-image: url('../../assets/background.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    position: relative;
 }
 
-/* Estilo do conteúdo principal */
-.main-content {
-    background-color: rgba(255, 255, 255, 0.9); /* Fundo semitransparente para melhor legibilidade */
+.img-dashboard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5); 
+    z-index: 1; 
+}
+
+.main-content-dashboard {
+    position: relative; 
+    background-color: rgba(255, 255, 255, 0.95); 
     padding: 30px;
     border-radius: 15px;
-    max-width: 900px; /* Largura máxima do conteúdo */
-    width: 90%; /* Largura responsiva */
+    max-width: 900px;
+    width: 90%;
     box-sizing: border-box;
     display: flex;
-    flex-direction: column; /* Organiza os itens em coluna */
-    align-items: center; /* Centraliza os itens horizontalmente */
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    margin-top: 100px;
 }
-
-/* Títulos */
 .title {
-    color: #457b9d; /* Cor azul clara */
+    color: #1d3557;
     text-align: center;
     margin-bottom: 20px;
-    font-size: 2.5rem; /* Tamanho do título */
+    font-size: 2.5rem;
 }
 
 .sub-title {
-    color: #1d3557; /* Cor azul escuro */
+    color: #1d3557;
     text-align: center;
     margin: 10px 0;
-    font-size: 1.8rem; /* Tamanho do subtítulo */
+    font-size: 1.8rem;
 }
 
-/* Estilo dos cartões */
 .cards-container {
     display: flex;
-    justify-content: space-around; /* Espaçamento entre os cartões */
+    justify-content: space-around;
     width: 100%;
     margin-bottom: 20px;
-    flex-wrap: wrap; /* Permite que os cartões se reorganizem em telas menores */
+    flex-wrap: wrap;
 }
 
 .card {
-    background-color: #ffffff; /* Fundo branco para os cartões */
+    background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
     text-align: center;
-    flex: 1; /* Flex-grow para preencher o espaço disponível */
-    margin: 10px; /* Margem entre os cartões */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves ao passar o mouse */
+    flex: 1;
+    margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 200px;
+    max-width: 300px;
 }
 
+
 .card:hover {
-    transform: scale(1.05); /* Aumenta o tamanho do cartão ao passar o mouse */
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); /* Aumenta o sombreado ao passar o mouse */
+    transform: scale(1.05);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card h3 {
-    color: #457b9d; /* Cor do título do cartão */
+    color: #457b9d;
     margin-bottom: 10px;
 }
 
-/* Estilo do mapa */
+
+.login-button {
+    padding: 12px 20px;
+    background-color: #1d3557;
+    color: #fff;
+    z-index: 10;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+}
+
+.login-button:hover {
+    background-color: #457b9d;
+    transform: scale(1.1);
+}
+
 .containerMap {
     margin-top: 20px;
     width: 100%;
 }
 
-/* Estilo do cabeçalho do mapa */
 .headerContainer {
-    text-align: center; /* Centraliza o título do mapa */
-    margin-bottom: 1rem; /* Espaço abaixo do cabeçalho */
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
-/* Estilos para mensagens de erro e sucesso */
+.TitttleMap {
+    color: #1d3557;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.8rem;
+}
+
+.DsTitttleMap {
+    font-size: 20px;
+}
+
 .error-message {
-    color: #e63946; /* Vermelho para mensagens de erro */
-    margin-bottom: 10px;
+    color: #e63946;
     text-align: center;
-    font-weight: bold; /* Destaca a mensagem */
+    font-weight: bold;
 }
 
-.success-message {
-    color: #4CAF50; /* Verde para mensagens de sucesso */
-    margin-bottom: 10px;
-    text-align: center;
-    font-weight: bold; /* Destaca a mensagem */
+
+.locais-lista {
+    width: 100%; 
+    margin-top: 20px;
 }
 
-/* Estilo do botão de login */
-.login-button-container {
+.destinos-list {
     display: flex;
-    justify-content: flex-end; /* Alinha o botão à direita */
-    width: 100%; /* Largura total do contêiner */
-    padding: 10px; /* Espaço ao redor do botão */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    list-style: none; 
+    padding: 0; 
+}
+.destinos-item {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: calc(45% - 20px);
+    transition: transform 0.2s;
 }
 
-.login-button {
-    padding: 8px 16px; /* Tamanho do botão */
-    background-color: #007bff; /* Cor de fundo do botão */
-    color: white; /* Cor do texto */
-    border: none; /* Remove bordas */
-    border-radius: 4px; /* Bordas arredondadas */
-    cursor: pointer; /* Cursor em forma de mão */
-    transition: background-color 0.3s, transform 0.2s; /* Transições suaves para cor de fundo e transformação */
+.destinos-item:hover {
+    transform: scale(1.03);
 }
 
-.login-button:hover {
-    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
-    transform: scale(1.05); /* Aumenta o botão ao passar o mouse */
-}
-
-/* Estilos responsivos */
 @media (max-width: 768px) {
     .main-content {
-        width: 95%; /* Ajuste a largura em telas menores */
-        padding: 15px; /* Reduz o padding */
+        width: 95%;
+        padding: 15px;
     }
 
     .title {
-        font-size: 1.8rem; /* Reduz o tamanho do título */
+        font-size: 1.8rem;
     }
 
     .sub-title {
-        font-size: 1.5rem; /* Reduz o tamanho do subtítulo */
+        font-size: 1.5rem;
     }
 
     .cards-container {
-        flex-direction: column; /* Organiza os cartões em coluna em telas menores */
-        align-items: center; /* Centraliza os cartões */
+        flex-direction: column;
+        align-items: center;
     }
 
     .card {
-        margin: 10px 0; /* Margem entre os cartões */
-        width: 100%; /* Largura total dos cartões */
+        margin: 10px 0;
+        width: 100%;
+    }
+
+    .destinos-item {
+        width: 100%; 
     }
 }

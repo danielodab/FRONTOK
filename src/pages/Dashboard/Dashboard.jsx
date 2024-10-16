@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importação do useNavigate
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-import './Dashboard.css'; // Certifique-se de que o caminho esteja correto
+import { useNavigate } from 'react-router-dom';
+import './Dashboard.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MarcadoresMapa } from '../../components/MarcadorMapa/marcadores-mapa';
+import backgroundImage from '../../assets/viagem.jpg';
 
 const Dashboard = () => {
-    const navigate = useNavigate(); // Inicializa o hook de navegação
+    const navigate = useNavigate();
     const [usuariosAtivos, setUsuariosAtivos] = useState(0);
     const [totalLocais, setTotalLocais] = useState(0);
     const [locais, setLocais] = useState([]);
     const [error, setError] = useState('');
+    const [localSelecionado, setLocalSelecionado] = useState(null); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,7 +33,19 @@ const Dashboard = () => {
 
                 setUsuariosAtivos(usuariosData.total);
                 setTotalLocais(locaisTotalData.Total);
-                setLocais(locaisData);
+
+                const locaisTransformados = locaisData.map((local) => ({
+                    id: local.id_local,
+                    nome: local.nome_local,
+                    descricao: local.descricao_local,
+                    imagem: local.imagem_local || null,
+                    localizacao: local.latitude_local && local.longitude_local ? {
+                        latitude: local.latitude_local,
+                        longitude: local.longitude_local
+                    } : null
+                }));
+
+                setLocais(locaisTransformados);
             } catch (error) {
                 console.error('Erro:', error);
                 setError(error.message);
@@ -44,7 +56,13 @@ const Dashboard = () => {
     }, []);
 
     const handleLoginRedirect = () => {
-        navigate('/login'); // Redireciona para a página de login
+        navigate('/login');
+    };
+
+    const handleLocalClick = (local) => {
+        if (local.localizacao) { 
+            setLocalSelecionado(local);
+        }
     };
 
     return (
@@ -54,19 +72,34 @@ const Dashboard = () => {
                     Ir para Login
                 </button>
             </div>
-            <main className="main-content">
-                <h1 className="title">Estatísticas do Sistema</h1>
+            <main className="main-content-dashboard ">
+                <h1 className="title">VIAGEM365</h1>
                 {error && <p className="error-message">{error}</p>}
 
                 <div className="cards-container">
                     <div className="card">
                         <h3>Usuários Ativos</h3>
-                        <p>{usuariosAtivos}</p>
-                    </div>
+                    <p>{usuariosAtivos}</p>
+                </div>
                     <div className="card">
                         <h3>Locais Cadastrados</h3>
-                        <p>{totalLocais}</p>
+                    <p>{totalLocais}</p>
                     </div>
+                </div>
+
+                <div className="containerMap">
+                    <div className="headerContainer">
+                        <h4 className="TitttleMap">Mapa</h4>
+                        <p className="DsTitttleMap">Localidades marcadas no mapa</p>
+                    </div>
+                    <MapContainer
+                        center={[-27.747782, -48.507073]}
+                        zoom={13}
+                        style={{ height: '400px', width: '100%' }}
+                    >
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        {locais.length > 0 && <MarcadoresMapa locais={locais} localSelecionado={localSelecionado} />}
+                    </MapContainer>
                 </div>
 
                 <h2 className="sub-title">Lista de Locais</h2>
@@ -74,12 +107,15 @@ const Dashboard = () => {
                     {locais.length > 0 ? (
                         <ul className="destinos-list">
                             {locais.map((local) => (
-                                <li key={local.id_local} className="destinos-item">
-                                    <h3>{local.nome_local}</h3>
-                                    <p>{local.descricao_local}</p>
-                                    <p>{local.logradouro_local}, {local.cidade_local} - {local.estado_local}</p>
-                                    <p>CEP: {local.cep_local}</p>
-                                    <p>Lat: {local.latitude_local}, Lon: {local.longitude_local}</p>
+                                <li
+                                    key={local.id}
+                                    className="destinos-item"
+                                    onClick={() => handleLocalClick(local)}
+                                    style={{ cursor: 'pointer', width: 'calc(50% - 10px)', margin: '5px' }} 
+                                >
+                                    <h3>{local.nome}</h3>
+                                    <p>{local.descricao}</p>
+                                    <p>Lat: {local.localizacao.latitude}, Lon: {local.localizacao.longitude}</p>
                                 </li>
                             ))}
                         </ul>
@@ -87,25 +123,9 @@ const Dashboard = () => {
                         <p>Nenhum local cadastrado.</p>
                     )}
                 </div>
-
-                <div className="containerMap">
-                    <div className="headerContainer">
-                        <h4>Mapa</h4>
-                        <p>Localidades marcadas no mapa</p>
-                    </div>
-                    <MapContainer
-                        center={[-27.747782, -48.507073]}
-                        zoom={13}
-                        style={{ height: '280px', width: '100%' }} // Responsividade
-                    >
-                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                        <MarcadoresMapa locais={locais} />
-                    </MapContainer>
-                </div>
             </main>
         </div>
     );
 };
 
 export default Dashboard;
-
